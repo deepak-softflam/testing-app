@@ -34,6 +34,12 @@ const reducer= (state = initialState, action )=>{  // fun that recive reducer ac
             updateMoment:action.data
         }
     }
+    if(action.type == 'UpdateSuccess'){
+        return {
+            ...state,
+            updateMoment:''
+        }
+    }
         return state
 }
 

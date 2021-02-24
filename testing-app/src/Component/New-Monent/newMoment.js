@@ -21,6 +21,7 @@ class NewMoment extends Component {
         }
     }
     componentDidMount(){
+        console.log('this.props.metaData.updateMoment', this.props.metaData.updateMoment)
         if(this.props.metaData.updateMoment){
             const newValue=this.props.metaData.updateMoment
             const data = this.state.formValue
@@ -102,7 +103,10 @@ class NewMoment extends Component {
         formData.append('tag',this.state.formValue.tabs)
         axios.put(`/updateMoment/${this.props.metaData.updateMoment._id}`,formData)
         .then(response=>{
-            if(response.status == 200) this.props.changeNav('/moment-List')
+            if(response.status == 200){
+                 this.props.changeNav('/moment-List')
+                 this.props.updateSuccess()
+                }
         })   
     }
 
@@ -162,7 +166,7 @@ class NewMoment extends Component {
           </Avatar>
             :null}
         </ListItemAvatar>
-        <ListItemText primary={this.state.file.name} secondary={this.state.file.type} />
+        <ListItemText primary={this.state.file?.name} secondary={this.state.file?.type} />
       </ListItem>
     </List>
           </div>
@@ -214,7 +218,8 @@ const mapStateToProps = state =>{
 
 const maptoDispatchProps = dispatch =>{
     return {
-        changeNav: (data) => dispatch({type:'NavChange',data})
+        changeNav: (data) => dispatch({type:'NavChange',data}),
+        updateSuccess: (data) => dispatch({type:'UpdateSuccess'}),
     }
   }
 
