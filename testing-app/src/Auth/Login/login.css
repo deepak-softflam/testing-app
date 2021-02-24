@@ -1,0 +1,13 @@
+.container-row{
+    text-align: center;
+}
+.input-text{
+    width: 100%;
+    text-align: center;
+}
+.input-field{
+    width: 60%;
+}
+.danger{
+    color:  red;
+}

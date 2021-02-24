@@ -3,11 +3,23 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter} from 'react-router-dom'
+import {createStore} from  'redux'
+import reducer from './Store/reducer'
+import {Provider} from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
+const store = createStore(reducer) // creating store at root level
 ReactDOM.render(
+    <BrowserRouter>
+  <Provider store={store}> 
+   <ToastContainer />
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
+  </Provider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
