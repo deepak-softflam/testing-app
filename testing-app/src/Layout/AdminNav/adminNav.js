@@ -20,7 +20,6 @@ import {Menu,MenuItem} from '@material-ui/core'
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import {connect} from 'react-redux'
-import axios from '../../axios_common'
 import {withRouter} from 'react-router-dom'
 
 
@@ -75,7 +74,6 @@ function AdminNavbar(props) {
   };
 
   const handleNavChange= (event)=>{
-    console.log(event)
     setnav(event)
     if(event =='Moment List'){ 
       props.changeNav('/moment-List')
