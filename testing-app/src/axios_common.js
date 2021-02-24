@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
+import {connect} from 'react-redux'
+
 const axinstance =axios.create({
     baseURL:'http://localhost:3618/api/'
 })
@@ -19,6 +21,8 @@ axinstance.interceptors.response.use(res =>{
     }
     return res
  },error =>{
+     toast.error(error.response.data.message);
+     localStorage.removeItem('authUser')
      return error
  })
 
@@ -29,4 +33,7 @@ axinstance.interceptors.response.use(res =>{
     return req
  }
   );
+
+
+
 export default axinstance

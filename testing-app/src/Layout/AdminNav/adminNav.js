@@ -20,7 +20,8 @@ import {Menu,MenuItem} from '@material-ui/core'
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import {connect} from 'react-redux'
-
+import axios from '../../axios_common'
+import {withRouter} from 'react-router-dom'
 
 
 const drawerWidth = 240;
@@ -94,6 +95,11 @@ function AdminNavbar(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+ const onLogout =()=>{
+
+ }
+
   const drawer = (
     <div>
         <div className="m-5">
@@ -167,7 +173,7 @@ function AdminNavbar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={handleClose && onLogout}>Logout</MenuItem>
               </Menu>
 
         </div>
@@ -201,4 +207,4 @@ const maptoDispatchProps = dispatch =>{
 }
 
 
-export default connect(null , maptoDispatchProps) (AdminNavbar);
+export default connect(null , maptoDispatchProps) (withRouter(AdminNavbar));

@@ -22,7 +22,7 @@ switch (props.inputsType) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.record.map((row,i) => (
+            {props.record? props.record.map((row,i) => (
               <TableRow key={i}>
                 <TableCell component="th" scope="row">
                   {i+1}
@@ -39,7 +39,7 @@ switch (props.inputsType) {
                   
                 </TableCell>
               </TableRow>
-            ))}
+            )):null}
           </TableBody>
         </Table>
       </TableContainer>

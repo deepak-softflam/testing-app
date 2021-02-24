@@ -40,6 +40,12 @@ const reducer= (state = initialState, action )=>{  // fun that recive reducer ac
             updateMoment:''
         }
     }
+    if(action.type == 'Auth'){
+        return {
+            ...state,
+            isLogin:false
+        }
+    }
         return state
 }
 
