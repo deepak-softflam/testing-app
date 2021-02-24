@@ -3,7 +3,8 @@ const token = localStorage.getItem('authUser')  //checking user is login or not 
 const initialState={  //storing value in store 
     isLogin:token ? true : false,
     assess_token:'',
-    currentNav:''
+    currentNav:'',
+    updateMoment:''
 }
 
 const reducer= (state = initialState, action )=>{  // fun that recive reducer acction 
@@ -25,6 +26,12 @@ const reducer= (state = initialState, action )=>{  // fun that recive reducer ac
         return {
             ...state,
             currentNav:action.data
+        }
+    }
+    if(action.type == 'UpdateMoment'){
+        return {
+            ...state,
+            updateMoment:action.data
         }
     }
         return state

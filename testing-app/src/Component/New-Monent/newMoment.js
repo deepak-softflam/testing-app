@@ -1,13 +1,8 @@
 import React,{Component} from 'react'
 import './newMoment.css'
 import {CssBaseline,List,ListItem,ListItemAvatar,Avatar,ListItemText,TextField,Box,Container,InputLabel,InputAdornment,Input,Button,Typography} from '@material-ui/core'
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
-import ImageIcon from '@material-ui/icons/Image';
-import WorkIcon from '@material-ui/icons/Work';
 import ChipInput from 'material-ui-chip-input'
 import axios from '../../axios_common'
-import { ToastContainer, toast } from 'react-toastify';
-import { withRouter } from 'react-router';
 import {connect} from 'react-redux'
 
 class NewMoment extends Component {
@@ -25,10 +20,19 @@ class NewMoment extends Component {
             required:true
         }
     }
+    componentDidMount(){
+        if(this.props.metaData.updateMoment){
+            const newValue=this.props.metaData.updateMoment
+            const data = this.state.formValue
+            data.title = newValue.title
+            var res = newValue.tag.split(",");
+            data.tabs = res
+            this.setState({formValue:data})
+            this.setState({file:newValue.files[0]})
+        }
+    }
 
     handleFileChange=(event)=>{
-        console.log('event', event.target.files)
-
         if(event.target.files[0].type =='image/png'|| event.target.files[0].type =='image/jpeg'){
             this.setState({isFileValid:true})
             this.setState({ file: event.target.files[0]})
@@ -91,6 +95,17 @@ class NewMoment extends Component {
     }
 
 
+    UpdateMoment=()=>{
+        const formData = new FormData();
+        formData.append('img', this.state.file);
+        formData.append('title', this.state.formValue.title)
+        formData.append('tag',this.state.formValue.tabs)
+        axios.put(`/updateMoment/${this.props.metaData.updateMoment._id}`,formData)
+        .then(response=>{
+            if(response.status == 200) this.props.changeNav('/moment-List')
+        })   
+    }
+
     checkFormInputValidation=(value , rule)=>{
         let isValid = false
          if(rule.required){
@@ -113,7 +128,7 @@ class NewMoment extends Component {
 
                <div className="form-row">
           <div className="form-group col-md-6">
-            <TextField id="standard-basic" label="Title" name="title" onChange={this.handelChange} />
+            <TextField id="standard-basic" label="Title" value={this.state.formValue.title} name="title" onChange={this.handelChange} />
             {!this.state.isTitleValid?
               <div className="danger">
                 Title is required.
@@ -126,6 +141,7 @@ class NewMoment extends Component {
                 onChange={this.handelChange}
                 label="Tags"
                 name="tabs"
+                defaultValue={this.state.formValue.tabs}
                 />
                    {!this.state.istagValid?
               <div className="danger">
@@ -178,8 +194,8 @@ class NewMoment extends Component {
   
        
                 <div className='input-text mb-3 mt-5 ' >
-                <Button variant="contained" className='mr-5' color="primary" onClick={this.onSubmit} >
-                        Submit
+                <Button variant="contained" className='mr-5' color="primary" onClick={this.props.metaData.updateMoment?this.UpdateMoment :this.onSubmit} >
+                        {this.props.metaData.updateMoment?'Update':'Submit'}
                 </Button>
                 </div>
             </div>
@@ -190,6 +206,11 @@ class NewMoment extends Component {
     }
 
 }
+const mapStateToProps = state =>{
+    return  {
+      metaData:state
+    }
+  }
 
 const maptoDispatchProps = dispatch =>{
     return {
@@ -197,4 +218,4 @@ const maptoDispatchProps = dispatch =>{
     }
   }
 
-export default connect(null , maptoDispatchProps)  (NewMoment)
+export default connect(mapStateToProps , maptoDispatchProps)  (NewMoment)

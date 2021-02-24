@@ -33,7 +33,7 @@ switch (props.inputsType) {
                 <TableCell >{row.title}</TableCell>
                 <TableCell >{row.tag}</TableCell>
                 <TableCell >    
-                    <EditIcon className="mr-4" />
+                    <EditIcon className="mr-4" onClick={()=>props.onUpdate(row)} />
                   
                     <DeleteIcon onClick={()=> props.onDelete(row)} />
                   
